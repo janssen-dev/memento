@@ -1,3 +1,5 @@
+import org.gradle.internal.os.OperatingSystem
+
 plugins {
     java
     id("org.springframework.boot") version "3.4.2"
@@ -54,4 +56,24 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+}
+
+// Frontend
+
+val frontendDir = file("${projectDir}/memento-frontend")
+
+
+tasks.register<Exec>("buildFrontend") {
+    workingDir = frontendDir
+    commandLine = if (OperatingSystem.current().isWindows) listOf("npm.cmd", "run", "build") else listOf("npm", "run", "build")
+}
+
+tasks.register<Copy>("copyFrontendToBackend") {
+    dependsOn("buildFrontend")
+    from("${frontendDir}/dist")
+    into(layout.buildDirectory.dir("resources/main/static"))
+}
+
+tasks.named("processResources") {
+    dependsOn("copyFrontendToBackend")
 }
