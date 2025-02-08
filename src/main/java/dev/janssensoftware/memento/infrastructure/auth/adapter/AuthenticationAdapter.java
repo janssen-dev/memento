@@ -2,6 +2,7 @@ package dev.janssensoftware.memento.infrastructure.auth.adapter;
 
 import dev.janssensoftware.memento.application.auth.port.AuthenticationPort;
 import dev.janssensoftware.memento.domain.model.User;
+import dev.janssensoftware.memento.infrastructure.auth.mapper.User_UserDetails_Mapper;
 import dev.janssensoftware.memento.infrastructure.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,10 +19,11 @@ public class AuthenticationAdapter implements AuthenticationPort {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
     private final PasswordEncoder passwordEncoder;
+    private final User_UserDetails_Mapper user_userDetails_mapper;
 
     @Override
     public String generateToken(User user) {
-        return jwtService.generateToken(toUserDetails(user));
+        return jwtService.generateToken(user_userDetails_mapper.toUserDetails(user));
     }
 
     @Override
@@ -36,14 +38,4 @@ public class AuthenticationAdapter implements AuthenticationPort {
         return passwordEncoder.encode(password);
     }
 
-    @Override
-    public UserDetails toUserDetails(User user) {
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .authorities(user.getRoles().stream()
-                        .map(SimpleGrantedAuthority::new)
-                        .toList())
-                .build();
-    }
 }
