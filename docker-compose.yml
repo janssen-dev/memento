@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:17.2
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_DB: memento
+      POSTGRES_USER: memento_user
+      POSTGRES_PASSWORD: secret
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

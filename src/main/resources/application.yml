@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: memento
+  datasource:
+    url: jdbc:postgresql://localhost:5432/memento
+    username: memento_user
+    password: secret
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:/db/changelog/db.changelog-master.yaml
+    enabled: true
