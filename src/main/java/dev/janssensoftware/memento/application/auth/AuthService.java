@@ -26,8 +26,8 @@ public class AuthService {
 
         User user = new User(
                 UUID.randomUUID(),
-                request.getUsername(),
                 null,
+                request.getUsername(),
                 authenticationPort.encodePassword(request.getPassword()),
                 List.of("USER"),
                 List.of()

@@ -30,6 +30,8 @@ const isAuthenticated = computed(() => authStore.isAuthenticated);
       <router-link to="/" class="nav-item">Home</router-link>
 
       <div class="nav-right" v-if="isAuthenticated">
+        <span class="username">{{ authStore.username }}</span>
+        <button class="logout-button" @click="authStore.logout()">Logout</button>
         <router-link to="/settings" class="icon-button">
           <FontAwesomeIcon :icon="faCog"/>
         </router-link>

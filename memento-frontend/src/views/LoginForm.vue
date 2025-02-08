@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 
@@ -9,7 +9,7 @@ const errorMessage = ref("");
 
 const login = async () => {
   try {
-    await authStore.login(username.value, password.value);
+    await authStore.login({username: username.value, password: password.value});
   } catch (error) {
     errorMessage.value = "Invalid credentials.";
   }

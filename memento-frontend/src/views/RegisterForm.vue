@@ -9,7 +9,7 @@ const errorMessage = ref("");
 
 const register = async () => {
   try {
-    await authStore.register(username.value, password.value);
+    await authStore.register({username: username.value, password: password.value});
   } catch (error) {
     errorMessage.value = "Registration failed.";
   }

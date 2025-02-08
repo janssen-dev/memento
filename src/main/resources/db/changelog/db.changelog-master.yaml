@@ -79,8 +79,17 @@ databaseChangeLog:
                   name: y
                   type: INTEGER
               - column:
-                  name: color
-                  type: VARCHAR(7)
+                  name: red
+                  type: INTEGER
+              - column:
+                  name: green
+                  type: INTEGER
+              - column:
+                  name: blue
+                  type: INTEGER
+              - column:
+                  name: alpha
+                  type: INTEGER
               - column:
                   name: user_id
                   type: UUID
