@@ -1,8 +1,8 @@
-package dev.janssensoftware.memento.infrastructure.persistence.adapter;
+package dev.janssensoftware.memento.infrastructure.auth.persistence.adapter;
 
-import dev.janssensoftware.memento.application.port.UserPersistencePort;
+import dev.janssensoftware.memento.application.auth.port.UserPersistencePort;
 import dev.janssensoftware.memento.domain.model.User;
-import dev.janssensoftware.memento.infrastructure.persistence.repository.UserJpaRepository;
+import dev.janssensoftware.memento.infrastructure.auth.persistence.repository.UserJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -28,6 +28,11 @@ public class UserRepositoryAdapter implements UserPersistencePort {
     @Override
     public Optional<User> findByUsername(String username) {
         return userJpaRepository.findByUsername(username);
+    }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return userJpaRepository.existsByUsername(username);
     }
 
     @Override

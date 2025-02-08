@@ -27,13 +27,11 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(csrf -> csrf.disable()) // CSRF für APIs deaktivieren (bei Sessions wäre es nötig)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll() // Auth-Endpunkte offen
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN") // Admin-Endpunkte geschützt
-                        .anyRequest().authenticated() // Alle anderen Endpoints benötigen Authentifizierung
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .anyRequest().permitAll()
                 )
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // JWT-Filter hinzufügen
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }
 

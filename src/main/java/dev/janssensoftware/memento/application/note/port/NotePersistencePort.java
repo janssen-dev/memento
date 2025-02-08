@@ -1,4 +1,4 @@
-package dev.janssensoftware.memento.application.port;
+package dev.janssensoftware.memento.application.note.port;
 
 import dev.janssensoftware.memento.domain.model.Note;
 import dev.janssensoftware.memento.domain.model.User;

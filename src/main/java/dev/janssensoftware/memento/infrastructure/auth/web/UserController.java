@@ -1,6 +1,6 @@
-package dev.janssensoftware.memento.infrastructure.web;
+package dev.janssensoftware.memento.infrastructure.auth.web;
 
-import dev.janssensoftware.memento.application.usecase.UserUseCase;
+import dev.janssensoftware.memento.application.auth.UserService;
 import dev.janssensoftware.memento.domain.model.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -15,13 +15,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserUseCase userUseCase;
+    private final UserService userService;
 
     @Operation(summary = "Create a new user", description = "Stores a new user in the database.")
     @ApiResponse(responseCode = "201", description = "User successfully created")
     @PostMapping
     public User createUser(@RequestBody User user) {
-        return userUseCase.createUser(user);
+        return userService.createUser(user);
     }
 
     @Operation(summary = "Get a user by ID", description = "Retrieves a user based on its unique identifier.")
@@ -31,7 +31,7 @@ public class UserController {
     })
     @GetMapping("/{id}")
     public User getUserById(@PathVariable UUID id) {
-        return userUseCase.getUserById(id)
+        return userService.getUserById(id)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
@@ -42,7 +42,7 @@ public class UserController {
     })
     @GetMapping("/username/{username}")
     public User getUserByUsername(@PathVariable String username) {
-        return userUseCase.getUserByUsername(username)
+        return userService.getUserByUsername(username)
                 .orElseThrow(() -> new IllegalArgumentException("User not found"));
     }
 
@@ -56,7 +56,7 @@ public class UserController {
         if (!id.equals(user.getId())) {
             throw new IllegalArgumentException("ID mismatch");
         }
-        return userUseCase.updateUser(user);
+        return userService.updateUser(user);
     }
 
     @Operation(summary = "Delete a user", description = "Deletes a user by their ID.")
@@ -66,6 +66,6 @@ public class UserController {
     })
     @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable UUID id) {
-        userUseCase.deleteUserById(id);
+        userService.deleteUserById(id);
     }
 }

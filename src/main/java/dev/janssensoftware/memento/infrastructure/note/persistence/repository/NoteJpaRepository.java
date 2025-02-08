@@ -1,4 +1,4 @@
-package dev.janssensoftware.memento.infrastructure.persistence.repository;
+package dev.janssensoftware.memento.infrastructure.note.persistence.repository;
 
 import dev.janssensoftware.memento.domain.model.Note;
 import dev.janssensoftware.memento.domain.model.User;

@@ -1,9 +1,9 @@
-package dev.janssensoftware.memento.infrastructure.persistence.adapter;
+package dev.janssensoftware.memento.infrastructure.note.persistence.adapter;
 
-import dev.janssensoftware.memento.application.port.NotePersistencePort;
+import dev.janssensoftware.memento.application.note.port.NotePersistencePort;
 import dev.janssensoftware.memento.domain.model.Note;
 import dev.janssensoftware.memento.domain.model.User;
-import dev.janssensoftware.memento.infrastructure.persistence.repository.NoteJpaRepository;
+import dev.janssensoftware.memento.infrastructure.note.persistence.repository.NoteJpaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

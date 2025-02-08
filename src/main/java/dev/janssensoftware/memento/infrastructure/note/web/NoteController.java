@@ -1,6 +1,6 @@
-package dev.janssensoftware.memento.infrastructure.web;
+package dev.janssensoftware.memento.infrastructure.note.web;
 
-import dev.janssensoftware.memento.application.usecase.NoteUseCase;
+import dev.janssensoftware.memento.application.note.NoteService;
 import dev.janssensoftware.memento.domain.model.Note;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -16,13 +16,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NoteController {
 
-    private final NoteUseCase noteUseCase;
+    private final NoteService noteService;
 
     @Operation(summary = "Create a new note", description = "Stores a new note in the database.")
     @ApiResponse(responseCode = "201", description = "Note successfully created")
     @PostMapping
     public Note createNote(@RequestBody Note note) {
-        return noteUseCase.createNote(note);
+        return noteService.createNote(note);
     }
 
     @Operation(summary = "Get a note by ID", description = "Retrieves a note based on its unique identifier.")
@@ -32,7 +32,7 @@ public class NoteController {
     })
     @GetMapping("/{id}")
     public Note getNoteById(@PathVariable UUID id) {
-        return noteUseCase.getNoteById(id)
+        return noteService.getNoteById(id)
                 .orElseThrow(() -> new IllegalArgumentException("Note not found"));
     }
 
@@ -40,7 +40,7 @@ public class NoteController {
     @ApiResponse(responseCode = "200", description = "Notes successfully retrieved")
     @GetMapping("/user/{userId}")
     public List<Note> getNotesByUser(@PathVariable UUID userId) {
-        return noteUseCase.getNotesByUserId(userId);
+        return noteService.getAllNotesByUserId(userId);
     }
 
     @Operation(summary = "Update a note", description = "Updates an existing note with new content.")
@@ -53,7 +53,7 @@ public class NoteController {
         if (!id.equals(note.getId())) {
             throw new IllegalArgumentException("ID mismatch");
         }
-        return noteUseCase.updateNote(note);
+        return noteService.updateNote(note);
     }
 
     @Operation(summary = "Delete a note", description = "Deletes a note by its ID.")
@@ -63,6 +63,6 @@ public class NoteController {
     })
     @DeleteMapping("/{id}")
     public void deleteNoteById(@PathVariable UUID id) {
-        noteUseCase.deleteNoteById(id);
+        noteService.deleteNoteById(id);
     }
 }

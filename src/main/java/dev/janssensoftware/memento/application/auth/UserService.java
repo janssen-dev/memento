@@ -1,6 +1,6 @@
-package dev.janssensoftware.memento.application.service;
+package dev.janssensoftware.memento.application.auth;
 
-import dev.janssensoftware.memento.application.port.UserPersistencePort;
+import dev.janssensoftware.memento.application.auth.port.UserPersistencePort;
 import dev.janssensoftware.memento.domain.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class UserService {
         return userPersistencePort.save(user);
     }
 
-    public void deleteUser(UUID id) {
+    public void deleteUserById(UUID id) {
         userPersistencePort.deleteById(id);
     }
 }

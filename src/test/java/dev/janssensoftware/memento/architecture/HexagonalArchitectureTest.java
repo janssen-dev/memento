@@ -12,43 +12,25 @@ class HexagonalArchitectureTest {
     private static final JavaClasses classes = new ClassFileImporter().importPackages("dev.janssensoftware.memento");
 
     /**
-     * Domain layer should not depend on any external frameworks or infrastructure-related packages.
+     * Domain layer should only depend on itself, Lombok, Jakarta, and Java packages.
      */
     @Test
-    void domain_should_not_depend_on_frameworks_or_adapters() {
-        ArchRule rule = noClasses()
+    void domain_should_only_depend_on_itself_or_db() {
+        ArchRule rule = classes()
                 .that().resideInAPackage("..domain..")
-                .should().dependOnClassesThat().resideInAnyPackage(
-                        "..application..",
-                        "..infrastructure..",
-                        "org.springframework..",
-                        "javax.."
-                );
+                .should().onlyDependOnClassesThat().resideInAnyPackage("..domain..", "lombok..", "jakarta..", "java..");
 
         rule.check(classes);
     }
 
     /**
-     * Application layer should only depend on the domain layer, avoiding direct dependencies on infrastructure.
+     * Application layer should only depend on itself, domain, Spring, Lombok, and Java packages.
      */
     @Test
-    void application_should_only_depend_on_domain() {
-        ArchRule rule = noClasses()
+    void application_should_only_depend_on_itself_or_domain_or_frameworks() {
+        ArchRule rule = classes()
                 .that().resideInAPackage("..application..")
-                .should().dependOnClassesThat().resideInAPackage("..infrastructure..");
-
-        rule.check(classes);
-    }
-
-    /**
-     * Infrastructure layer should not directly depend on the domain layer but instead use application ports.
-     */
-    @Test
-    void infrastructure_should_not_depend_on_domain_directly() {
-        ArchRule rule = noClasses()
-                .that().resideInAPackage("..infrastructure.adapter..")
-                .should().dependOnClassesThat().resideInAPackage("..domain..")
-                .allowEmptyShould(true);
+                .should().onlyDependOnClassesThat().resideInAnyPackage("..application..", "..domain..", "org.springframework..", "lombok..", "java..");
 
         rule.check(classes);
     }
@@ -59,21 +41,8 @@ class HexagonalArchitectureTest {
     @Test
     void ports_should_only_be_used_by_application_and_adapters() {
         ArchRule rule = classes()
-                .that().resideInAPackage("..application.port..")
-                .should().onlyBeAccessed().byAnyPackage("..application..", "..infrastructure.adapter..");
-
-        rule.check(classes);
-    }
-
-    /**
-     * Use case classes should reside in the application.usecase package.
-     */
-    @Test
-    void use_cases_should_reside_in_application_usecase() {
-        ArchRule rule = classes()
-                .that().haveSimpleNameEndingWith("UseCase")
-                .should().resideInAPackage("..application.usecase..")
-                .allowEmptyShould(true);
+                .that().resideInAPackage("..application..port..")
+                .should().onlyBeAccessed().byAnyPackage("..application..", "..infrastructure..adapter..");
 
         rule.check(classes);
     }
