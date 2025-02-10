@@ -19,4 +19,6 @@ public interface NoteWebPort {
     void deleteNoteById(UUID id);
 
     List<Note> patchNotes(List<Note> notes);
+
+    Optional<User> findUserByUsername(String username);
 }

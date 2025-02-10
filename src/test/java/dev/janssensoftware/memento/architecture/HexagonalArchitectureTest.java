@@ -52,10 +52,10 @@ class HexagonalArchitectureTest {
      * Output ports should only be accessed by the application layer.
      */
     @Test
-    void output_ports_should_only_be_accessed_by_application_adapter() {
+    void output_ports_should_only_be_accessed_by_application() {
         ArchRule rule = classes()
                 .that().resideInAPackage("..port..out")
-                .should().onlyBeAccessed().byClassesThat().resideInAnyPackage("..application..", "..adapter..");
+                .should().onlyBeAccessed().byClassesThat().resideInAnyPackage("..application..");
 
         rule.check(classes);
     }

@@ -15,10 +15,9 @@ public class NoteWebAdapter {
 
     private final NoteWebPort noteWebPort;
     private final Note_WebNoteDto_Mapper note_webNoteDto_mapper;
-    private final UserPersistencePort userPersistencePort;
 
     public WebNoteDto createNote(WebNoteDto note, String username) {
-        return note_webNoteDto_mapper.toWebNoteDto(noteWebPort.createNote(note_webNoteDto_mapper.toNote(note, userPersistencePort.findByUsername(username).get())));
+        return note_webNoteDto_mapper.toWebNoteDto(noteWebPort.createNote(note_webNoteDto_mapper.toNote(note, noteWebPort.findUserByUsername(username).get())));
     }
 
     public List<WebNoteDto> getAllNotesByUsername(String username) {
@@ -34,7 +33,7 @@ public class NoteWebAdapter {
     }
 
     public List<WebNoteDto> patchNotes(List<WebNoteDto> notes, String username) {
-        final var patchedNotes = noteWebPort.patchNotes(notes.stream().map(note -> note_webNoteDto_mapper.toNote(note, userPersistencePort.findByUsername(username).get())).toList());
+        final var patchedNotes = noteWebPort.patchNotes(notes.stream().map(note -> note_webNoteDto_mapper.toNote(note, noteWebPort.findUserByUsername(username).get())).toList());
         return patchedNotes.stream().map(note_webNoteDto_mapper::toWebNoteDto).toList();
     }
 }

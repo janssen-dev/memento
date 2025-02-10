@@ -2,6 +2,7 @@ package dev.janssensoftware.memento.application.note;
 
 import dev.janssensoftware.memento.domain.model.Note;
 import dev.janssensoftware.memento.domain.model.User;
+import dev.janssensoftware.memento.port.auth.out.UserPersistencePort;
 import dev.janssensoftware.memento.port.note.in.NoteWebPort;
 import dev.janssensoftware.memento.port.note.out.NotePersistencePort;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import java.util.UUID;
 public class NoteService implements NoteWebPort {
 
     private final NotePersistencePort notePersistencePort;
+    private final UserPersistencePort userPersistencePort;
 
     @Override
     public Note createNote(Note note) {
@@ -63,5 +65,10 @@ public class NoteService implements NoteWebPort {
 //                })
 //                .collect(Collectors.toList());
         return List.of(); // TODO
+    }
+
+    @Override
+    public Optional<User> findUserByUsername(String username) {
+        return userPersistencePort.findByUsername(username);
     }
 }
