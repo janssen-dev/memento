@@ -3,7 +3,7 @@ package dev.janssensoftware.memento.adapter.auth.out.jwt;
 import dev.janssensoftware.memento.application.auth.mapper.User_UserDetails_Mapper;
 import dev.janssensoftware.memento.domain.model.User;
 import dev.janssensoftware.memento.infrastructure.security.JwtService;
-import dev.janssensoftware.memento.port.auth.out.AuthenticationPort;
+import dev.janssensoftware.memento.port.auth.out.AuthJwtPort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class AuthenticationAdapter implements AuthenticationPort { // TODO should call a Service..
+public class AuthJwtAdapter implements AuthJwtPort { // TODO should call a Service..
 
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;

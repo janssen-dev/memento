@@ -1,7 +1,7 @@
 package dev.janssensoftware.memento.infrastructure.note.in.web;
 
 import dev.janssensoftware.memento.infrastructure.note.in.web.dto.WebNoteDto;
-import dev.janssensoftware.memento.adapter.note.in.web.NoteAdapter;
+import dev.janssensoftware.memento.adapter.note.in.web.NoteWebAdapter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -17,13 +17,13 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class NoteController {
 
-    private final NoteAdapter noteAdapter;
+    private final NoteWebAdapter noteWebAdapter;
 
     @Operation(summary = "Create a new note", description = "Stores a new note in the database.")
     @ApiResponse(responseCode = "201", description = "Note successfully created")
     @PostMapping
     public WebNoteDto createNote(@RequestBody WebNoteDto note, Principal principal) {
-        return noteAdapter.createNote(note, principal.getName());
+        return noteWebAdapter.createNote(note, principal.getName());
     }
 
     @Operation(summary = "Get a note by ID", description = "Retrieves a note based on its unique identifier.")
@@ -33,14 +33,14 @@ public class NoteController {
     })
     @GetMapping("/{id}")
     public WebNoteDto getNoteById(@PathVariable UUID id) {
-        return noteAdapter.getNoteById(id).orElseThrow(() -> new IllegalArgumentException("Note not found"));
+        return noteWebAdapter.getNoteById(id).orElseThrow(() -> new IllegalArgumentException("Note not found"));
     }
 
     @Operation(summary = "Get all notes of the current user", description = "Retrieves all notes associated with the current user.")
     @ApiResponse(responseCode = "200", description = "Notes successfully retrieved")
     @GetMapping
     public List<WebNoteDto> getNotesByUser(Principal principal) {
-        return noteAdapter.getAllNotesByUsername(principal.getName());
+        return noteWebAdapter.getAllNotesByUsername(principal.getName());
     }
 
     @Operation(summary = "Delete a note", description = "Deletes a note by its ID.")
@@ -50,7 +50,7 @@ public class NoteController {
     })
     @DeleteMapping("/{id}")
     public void deleteNoteById(@PathVariable UUID id) {
-        noteAdapter.deleteNoteById(id);
+        noteWebAdapter.deleteNoteById(id);
     }
 
     @Operation(summary = "Patch multiple notes", description = "Updates multiple notes with new content.")
@@ -60,6 +60,6 @@ public class NoteController {
     })
     @PatchMapping
     public List<WebNoteDto> patchNotes(@RequestBody List<WebNoteDto> notes, Principal principal) {
-        return noteAdapter.patchNotes(notes, principal.getName());
+        return noteWebAdapter.patchNotes(notes, principal.getName());
     }
 }

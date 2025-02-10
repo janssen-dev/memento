@@ -1,6 +1,6 @@
 package dev.janssensoftware.memento.infrastructure.auth.in.web;
 
-import dev.janssensoftware.memento.adapter.auth.in.web.UserAdapter;
+import dev.janssensoftware.memento.adapter.auth.in.web.UserWebAdapter;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
@@ -17,7 +17,7 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
 
-    private final UserAdapter userAdapter;
+    private final UserWebAdapter userWebAdapter;
 
     @Operation(summary = "Delete a user", description = "Deletes a user by their ID.")
     @ApiResponses(value = {
@@ -26,6 +26,6 @@ public class UserController {
     })
     @DeleteMapping("/{id}")
     public void deleteUserById(@PathVariable UUID id) {
-        userAdapter.deleteUserById(id);
+        userWebAdapter.deleteUserById(id);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-public interface NotePort {
+public interface NoteWebPort {
     Note createNote(Note note);
 
     List<Note> getAllNotesByUser(User user);

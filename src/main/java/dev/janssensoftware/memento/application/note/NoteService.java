@@ -2,7 +2,7 @@ package dev.janssensoftware.memento.application.note;
 
 import dev.janssensoftware.memento.domain.model.Note;
 import dev.janssensoftware.memento.domain.model.User;
-import dev.janssensoftware.memento.port.note.in.NotePort;
+import dev.janssensoftware.memento.port.note.in.NoteWebPort;
 import dev.janssensoftware.memento.port.note.out.NotePersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class NoteService implements NotePort {
+public class NoteService implements NoteWebPort {
 
     private final NotePersistencePort notePersistencePort;
 

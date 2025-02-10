@@ -1,7 +1,7 @@
 package dev.janssensoftware.memento.application.auth;
 
 import dev.janssensoftware.memento.domain.model.User;
-import dev.janssensoftware.memento.port.auth.in.UserPort;
+import dev.janssensoftware.memento.port.auth.in.UserWebPort;
 import dev.janssensoftware.memento.port.auth.out.UserPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +13,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class UserService implements UserPort {
+public class UserService implements UserWebPort {
 
     private final UserPersistencePort userPersistencePort;
 

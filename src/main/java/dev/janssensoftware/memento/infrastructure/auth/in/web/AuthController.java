@@ -3,7 +3,7 @@ package dev.janssensoftware.memento.infrastructure.auth.in.web;
 import dev.janssensoftware.memento.infrastructure.auth.in.web.dto.LoginRequestDto;
 import dev.janssensoftware.memento.infrastructure.auth.in.web.dto.AuthResponseDto;
 import dev.janssensoftware.memento.infrastructure.auth.in.web.dto.RegisterRequestDto;
-import dev.janssensoftware.memento.adapter.auth.in.web.AuthAdapter;
+import dev.janssensoftware.memento.adapter.auth.in.web.AuthWebAdapter;
 import dev.janssensoftware.memento.infrastructure.security.JwtService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -24,7 +24,7 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
-    private final AuthAdapter authAdapter;
+    private final AuthWebAdapter authAdapter;
 
     @Operation(summary = "User login", description = "Authenticates a user and returns a JWT token")
     @ApiResponses(value = {

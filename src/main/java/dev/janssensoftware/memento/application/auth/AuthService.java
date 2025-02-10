@@ -4,8 +4,8 @@ import dev.janssensoftware.memento.application.auth.dto.TokenDto;
 import dev.janssensoftware.memento.application.auth.dto.UserPassDto;
 import dev.janssensoftware.memento.application.auth.dto.UsernameAlreadyExistsException;
 import dev.janssensoftware.memento.domain.model.User;
-import dev.janssensoftware.memento.port.auth.in.AuthPort;
-import dev.janssensoftware.memento.port.auth.out.AuthenticationPort;
+import dev.janssensoftware.memento.port.auth.in.AuthWebPort;
+import dev.janssensoftware.memento.port.auth.out.AuthJwtPort;
 import dev.janssensoftware.memento.port.auth.out.UserPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,10 +15,10 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService implements AuthPort {
+public class AuthService implements AuthWebPort {
 
     private final UserPersistencePort userPersistencePort;
-    private final AuthenticationPort authenticationPort;
+    private final AuthJwtPort authenticationPort;
 
     @Override
     public TokenDto register(UserPassDto request) {
