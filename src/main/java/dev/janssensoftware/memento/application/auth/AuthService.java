@@ -1,11 +1,12 @@
 package dev.janssensoftware.memento.application.auth;
 
-import dev.janssensoftware.memento.application.auth.dto.AuthRequest;
-import dev.janssensoftware.memento.application.auth.dto.AuthResponse;
-import dev.janssensoftware.memento.application.auth.dto.RegisterRequest;
-import dev.janssensoftware.memento.application.auth.port.AuthenticationPort;
-import dev.janssensoftware.memento.application.auth.port.UserPersistencePort;
+import dev.janssensoftware.memento.application.auth.dto.TokenDto;
+import dev.janssensoftware.memento.application.auth.dto.UserPassDto;
+import dev.janssensoftware.memento.application.auth.dto.UsernameAlreadyExistsException;
 import dev.janssensoftware.memento.domain.model.User;
+import dev.janssensoftware.memento.port.auth.in.AuthPort;
+import dev.janssensoftware.memento.port.auth.out.AuthenticationPort;
+import dev.janssensoftware.memento.port.auth.out.UserPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,14 +15,15 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class AuthService {
+public class AuthService implements AuthPort {
 
     private final UserPersistencePort userPersistencePort;
     private final AuthenticationPort authenticationPort;
 
-    public AuthResponse register(RegisterRequest request) {
+    @Override
+    public TokenDto register(UserPassDto request) {
         if (userPersistencePort.existsByUsername(request.getUsername())) {
-            throw new RuntimeException("User already exists");
+            throw new UsernameAlreadyExistsException();
         }
 
         User user = new User(
@@ -35,16 +37,17 @@ public class AuthService {
 
         userPersistencePort.save(user);
         String token = authenticationPort.generateToken(user);
-        return new AuthResponse(token);
+        return new TokenDto(token);
     }
 
-    public AuthResponse login(AuthRequest request) {
+    @Override
+    public TokenDto login(UserPassDto request) {
         authenticationPort.authenticate(request.getUsername(), request.getPassword());
 
         User user = userPersistencePort.findByUsername(request.getUsername())
                 .orElseThrow(() -> new RuntimeException("Invalid credentials"));
 
         String token = authenticationPort.generateToken(user);
-        return new AuthResponse(token);
+        return new TokenDto(token);
     }
 }

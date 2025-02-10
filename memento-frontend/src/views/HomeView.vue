@@ -1,8 +1,7 @@
 <script setup lang="ts">
+import NoteView from "@/views/NoteView.vue";
 </script>
 
 <template>
-  <main>
-    12345
-  </main>
+    <NoteView></NoteView>
 </template>

@@ -1,23 +1,9 @@
-<script setup>
-import {ref, onMounted, computed} from "vue";
+<script setup lang="ts">
+import {computed} from "vue";
 import {useRoute} from "vue-router";
-import {GridStack} from "gridstack";
-import "gridstack/dist/gridstack.min.css";
 import {faCog, faUser} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import {useAuthStore} from "@/stores/auth.ts";
-
-const route = useRoute();
-const grid = ref(null);
-
-onMounted(() => {
-  grid.value = GridStack.init({
-    cellHeight: 100,
-    float: true,
-    resizable: {handles: "e, se, s, sw, w"},
-    draggable: true,
-  });
-});
 
 const authStore = useAuthStore();
 const isAuthenticated = computed(() => authStore.isAuthenticated);

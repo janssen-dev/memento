@@ -18,7 +18,7 @@ public class RgbaColor {
     private int alpha;
 
     public static RgbaColor fromHex(String hex) {
-        if (!hex.matches("^#([A-Fa-f0-9]{8})$")) {
+        if (!hex.matches("^#?([A-Fa-f0-9]{8})$")) {
             throw new IllegalArgumentException("Invalid RGBA HEX color format: " + hex);
         }
         return new RgbaColor(

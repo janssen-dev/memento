@@ -1,7 +1,10 @@
 package dev.janssensoftware.memento.domain.model;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.UUID;
 
@@ -13,7 +16,7 @@ import java.util.UUID;
 public class Note {
 
     @Id
-    private UUID id;
+    private UUID id = UUID.randomUUID();
 
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
