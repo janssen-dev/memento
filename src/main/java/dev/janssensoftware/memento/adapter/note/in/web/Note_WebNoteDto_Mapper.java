@@ -6,12 +6,14 @@ import dev.janssensoftware.memento.domain.model.RgbaColor;
 import dev.janssensoftware.memento.domain.model.User;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 public class Note_WebNoteDto_Mapper {
 
     public Note toNote(WebNoteDto webNoteDto, User user) {
         return new Note(
-                webNoteDto.id(),
+                webNoteDto.id() != null ? webNoteDto.id() : UUID.randomUUID(),
                 webNoteDto.content(),
                 webNoteDto.width(),
                 webNoteDto.height(),

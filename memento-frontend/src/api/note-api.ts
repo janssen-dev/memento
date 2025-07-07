@@ -3,9 +3,11 @@ import type Note from "@/types/Note";
 
 export const updateNotes = async (notes: Note[]) => {
   try {
-    await api.patch('/notes', notes);
+    const response = await api.patch('/notes', notes);
+    return response.data as Note[];
   } catch (error) {
     console.error('Failed to update notes', error);
+    throw error;
   }
 };
 

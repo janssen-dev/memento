@@ -17,7 +17,9 @@ public class NoteWebAdapter {
     private final Note_WebNoteDto_Mapper note_webNoteDto_mapper;
 
     public WebNoteDto createNote(WebNoteDto note, String username) {
-        return note_webNoteDto_mapper.toWebNoteDto(noteWebPort.createNote(note_webNoteDto_mapper.toNote(note, noteWebPort.findUserByUsername(username).get())));
+        final var user = noteWebPort.findUserByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + username));
+        return note_webNoteDto_mapper.toWebNoteDto(noteWebPort.createNote(note_webNoteDto_mapper.toNote(note, user)));
     }
 
     public List<WebNoteDto> getAllNotesByUsername(String username) {
@@ -33,7 +35,9 @@ public class NoteWebAdapter {
     }
 
     public List<WebNoteDto> patchNotes(List<WebNoteDto> notes, String username) {
-        final var patchedNotes = noteWebPort.patchNotes(notes.stream().map(note -> note_webNoteDto_mapper.toNote(note, noteWebPort.findUserByUsername(username).get())).toList());
+        final var user = noteWebPort.findUserByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("User not found: " + username));
+        final var patchedNotes = noteWebPort.patchNotes(notes.stream().map(note -> note_webNoteDto_mapper.toNote(note, user)).toList());
         return patchedNotes.stream().map(note_webNoteDto_mapper::toWebNoteDto).toList();
     }
 }

@@ -52,19 +52,16 @@ public class NoteService implements NoteWebPort {
 
     @Override
     public List<Note> patchNotes(List<Note> notes) {
-//        return webNotes.stream()
-//                .map(webNote -> {
-//                    Optional<Note> existingNote = notePersistencePort.findById(webNote.id());
-//                    if (existingNote.isPresent() && existingNote.get().getUser().getUsername().equals(username)) {
-//                        User user = existingNote.get().getUser();
-//                        Note note = webNoteMapper.toNote(webNote, user);
-//                        return notePersistencePort.save(note);
-//                    } else {
-//                        throw new IllegalArgumentException("Note not found or does not belong to the user");
-//                    }
-//                })
-//                .collect(Collectors.toList());
-        return List.of(); // TODO
+        return notes.stream()
+                .map(note -> {
+                    Optional<Note> existingNote = notePersistencePort.findById(note.getId());
+                    if (existingNote.isPresent()) {
+                        return notePersistencePort.save(note);
+                    } else {
+                        throw new IllegalArgumentException("Note not found with id: " + note.getId());
+                    }
+                })
+                .toList();
     }
 
     @Override
